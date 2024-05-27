@@ -5,6 +5,8 @@ Deploying a application as a single unit where all it's functionality deployed t
 Developers work with a single code base which is then packaged as EAR/WAR and deployed into single web/application server.
 The entire application uses single database.
 
+Monolithic applications are built as a single unit that includes all of the different components of the application, including APIs, services, databases, load balancers and so forth
+
 
 Pros:
 a. Simpler developement & deployment for smaller teams and applications.
