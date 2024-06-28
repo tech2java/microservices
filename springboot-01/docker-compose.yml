@@ -1,0 +1,26 @@
+services:
+  springboot-01:
+   image: "javatrainer/springboot-01:v1"
+   container_name: springboot-01
+   ports: 
+   - "8080:8080"
+   deploy:
+    resources:
+     limits:
+      memory: 700m
+   networks:
+    - tech2java
+  springboot-02:
+   image: "javatrainer/springboot-02:v1"
+   container_name: springboot-02
+   ports: 
+   - "9090:9090"
+   deploy:
+    resources:
+     limits:
+      memory: 700m
+   networks:
+    - tech2java   
+networks:
+ tech2java:
+  driver: "bridge"
