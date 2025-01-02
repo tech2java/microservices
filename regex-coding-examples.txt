@@ -1,0 +1,974 @@
+Regex Coding Examples:(26th video)
+===========================
+
+//26.Replacement String
+public class AccountsApplication {
+
+	private static String REGEX="lion";
+
+	private static String INPUT="The lion says meow. "+"All lions says meow";
+	private static String REPLACE="cat";
+	public static void main(String[] args) {
+
+		Pattern pattern=Pattern.compile(REGEX);
+		Matcher matcher =pattern.matcher(INPUT);
+
+		INPUT=matcher.replaceAll(REPLACE);
+		System.out.println(INPUT);
+
+	}
+}
+
+//27.appendReplacement and appendTail methods of matcher 
+
+public class AccountsApplication {
+	private static String REGEX="aa";
+	private static String INPUT="aafooaafooaafooaa";
+	private static String REPLACE="-";
+	public static void main(String[] args) {
+
+		Pattern pattern=Pattern.compile(REGEX);
+		Matcher matcher =pattern.matcher(INPUT);
+
+		StringBuffer sb=new StringBuffer();
+		while(matcher.find()){
+
+			matcher.appendReplacement(sb,REPLACE);
+		}
+
+		matcher.appendTail(sb);
+		System.out.println(sb.toString());
+	}
+}
+
+//29.split method of pattern class
+public static void main(String[] args) {
+
+	String ip="Peter_welcome_to_india";
+
+	String regex="_";
+
+	Pattern p=Pattern.compile(regex);
+	String[] arr=p.split(ip);
+	for(String s:arr){
+		System.out.println(s);
+	}
+
+	System.out.println("Number of split strings length::"+arr.length);
+}
+
+
+
+//30.find multiple occurrences using matcher methods
+public static void main(String[] args) {
+
+	String ip="Cat AA Cat AA Cat AAA";
+
+	String regex="Cat";
+
+	Pattern p=Pattern.compile(regex);
+	Matcher matcher=p.matcher(ip);
+
+	while(matcher.find()){
+		System.out.println("found at :"+matcher.start() +"---"+matcher.end());
+	}
+}
+//32.check string contains abc, string does not start with number and string contains 3 letters?
+public static void main(String[] args) {
+
+	System.out.println(Pattern.matches(".*abc.*","deabcxyz"));
+	
+	System.out.println("-----------------------------------------------");
+	System.out.println(Pattern.matches("^[^\\d].*","123abc"));
+	System.out.println(Pattern.matches("^[^\\d].*","abc123"));
+
+	System.out.println("-----------------------------------------------");
+	System.out.println(Pattern.matches("[a-zA-Z][a-zA-Z][a-zA-Z]","xyz"));
+	System.out.println(Pattern.matches("[a-zA-Z][a-zA-Z][a-zA-Z]","abc"));
+	System.out.println(Pattern.matches("[a-zA-Z][a-zA-Z][a-zA-Z]","xyza"));
+}
+//33.Write Java Regex for Zero or More Non-Digit Characters
+public static void main(String[] args) {
+
+	System.out.println(Pattern.matches("\\D*","abcde"));
+	System.out.println(Pattern.matches("\\D*","abcde123"));
+
+	System.out.println("--------------------------------------");
+	/*^ denotes start of the line ,  $- end of the line*/
+	System.out.println(Pattern.matches("^This$","This is Chaitanya"));
+	System.out.println(Pattern.matches("^This$","This"));
+	System.out.println(Pattern.matches("^This$","is this Chaitanya"));
+}
+//34.Write Regex for Social Security Number (SSN) in Java
+public static void main(String[] args) {
+
+	//AAA-GG-SSSS(Area,Group and Serial)
+	var list=List.of("234-23-3455","214-13-3455 (G)","274-2-3255","254-13-3459","444-23-9877");
+	
+	String ssnRegex="^(\\d{3}-\\d{2}-\\d{4})";
+	
+	for(String ssn:list){
+		if(ssn.matches(ssnRegex)){
+			System.out.println("Found good SSN:"+ssn);
+		}
+	}
+}
+//35.Extract Specific Values from Text Using Java Regex
+public static void main(String[] args) {
+
+	String ip="I hava a cat, but i like my dog better";
+
+	Pattern pattern=Pattern.compile("(dog|mouse|cat|wolf)");
+	Matcher matcher =pattern.matcher(ip);
+
+	List<String> stringList=new ArrayList<>();
+	while(matcher.find()){
+		System.out.println("Found a matcher group "+matcher.group()+".");
+		stringList.add(matcher.group());
+	}
+	System.out.println(stringList);
+}
+//36.Replacing Text Values with Java Regular Expressions( mask phonenumber with ****masked****)
+public static void main(String[] args) {
+	String ip="Peter PhoneNumber=9090989989. Juli PhoneNumber=8888890908";
+	//(PhoneNumber=) - Group1
+	//(\d+) - group2
+	Pattern pattern=Pattern.compile("(PhoneNumber=)(\\d+)");
+	Matcher matcher =pattern.matcher(ip);
+
+	StringBuffer sb=new StringBuffer();
+	while(matcher.find()){
+
+		System.out.println("masking "+matcher.group(2));
+		matcher.appendReplacement(sb,matcher.group(1)+"***masking***");
+	}
+	matcher.appendTail(sb);
+	System.out.println(sb);
+}
+//39.Write a Regex to Validate Emails
+String regex="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+			
+//41.Regex for IP Address Validation
+private static final String IP_ADDRESS_REGEX = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+                                                    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+                                                    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+                                                    + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";		
+													
+ List<String> validIPList = Arrays.asList("1.1.1.1", "255.255.255.255",
+                "192.168.1.2", "10.10.1.1", "132.253.111.10", "26.10.2.10",
+                "127.0.0.1");
+				
+				
+//42.12-hour time format
+
+ private static final String TIME12HOURS_REGEX = "(1[012]|[1-9]):[0-5][0-9](\\s)?(?i)(am|pm)";
+List<String> validTimeList = Arrays.asList("2:00 am", "2:00 AM", "12:50 pm");
+
+//43.24-hour time format
+ private static final String TIME24HOURS_REGEX = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+List<String> validTimeList = Arrays.asList("2:00", "23:00", "14:50");
+
+//44. Date format 
+private static final String DATE_REGEX = "(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\\d\\d)"; 
+ List<String> validDateList = Arrays.asList("01/01/2020", "31/01/2020",
+                "31/8/2010", "1/1/2010");
+				
+//45.How to check 'http://' contains in the input text
+public static void main(String[] args) {
+
+
+	String inputText = "This is the text to be searched "
+			+ "for occurrences of the http:// pattern.";
+
+	System.out.println(Pattern.matches(".*http://.*",inputText));
+}
+				
+//46.check multiple occurrences of 'is' in the input text?				
+public static void main(String[] args) {
+	String inputCharSeq = "This is the text which is to be searched "
+			+ "for occurrences of the word 'is'.";
+
+	String regex = "is";
+
+	Pattern pattern=Pattern.compile(regex);
+
+	Matcher matcher=pattern.matcher(inputCharSeq);
+
+	int count=0;
+	while(matcher.find()){
+		count++;
+		System.out.println("count::"+count +"--"+matcher.start()+"---"+matcher.end());
+	}
+}
+
+//47.spilt the input text based on hyphen using Java Regex? 
+public static void main(String[] args) {
+	String inputCharSeq = "Hello-peter-how-are-you?";
+
+	String regex = "-";
+
+	Pattern pattern=Pattern.compile(regex);
+
+
+	String[] arr=pattern.split(inputCharSeq);
+	for(String str:arr){
+		System.out.println(str);
+	}
+}
+
+//56.Pattern.quote() Method in Java Regex
+public class AccountsApplication {
+
+	private static String STRING_TO_BE_LITERALIZED = "dog$";
+	private static String INPUT_CHAR_SEQ = "The dog$ says meow All dog$ say meow.";
+	private static String REPLACE_STR = "cat";
+
+	public static void main(String[] args) {
+
+		String regex=Pattern.quote(STRING_TO_BE_LITERALIZED);
+		System.out.println("regex:"+regex);
+
+		Pattern pattern=Pattern.compile(regex);
+		Matcher matcher =pattern.matcher(INPUT_CHAR_SEQ);
+
+		INPUT_CHAR_SEQ=matcher.replaceAll(REPLACE_STR);
+		System.out.println(INPUT_CHAR_SEQ);
+	}
+}
+//57. Pattern.asPredicate() to Filter Email Addresses
+
+public static void main(String[] args) {
+
+	String regex="^(.+)@gmail.com$";
+
+	Pattern pattern=Pattern.compile(regex);
+
+	Predicate<String> predicate =pattern.asPredicate();
+
+	List<String> emailList = Arrays.asList("peter@yahoo.com",
+			"bob@gmail.com", "juli@gmail.com",
+			"david@rediff.com");
+
+	emailList.stream().filter(predicate).toList().forEach(System.out::println);
+}
+
+//same result without predeicate
+ public static void main(String[] args)
+{
+
+	String regex = "^(.+)@gmail.com$";
+	Pattern pattern = Pattern.compile(regex);
+
+	List<String> emailList = Arrays.asList("peter@yahoo.com",
+			"bob@gmail.com", "juli@gmail.com",
+			"david@rediff.com");
+
+	for (String email : emailList)
+	{
+		Matcher matcher = pattern.matcher(email);
+
+		if (matcher.matches())
+		{
+			System.out.println(email);
+		}
+	}
+	
+
+//58.calculate how many times foo is there in the input text?
+public static void main(String[] args) {
+
+	calculateMatches("foo","foo bar foo");
+}
+
+private static void calculateMatches(String regex,String input){
+
+	Pattern pattern=Pattern.compile(regex);
+	Matcher matcher=pattern.matcher(input);
+
+	int count=0;
+	while(matcher.find()){
+		count++;
+
+	}
+	System.out.println("No of Matches::"+count);
+
+}	
+
+//59.Use the Dot Metacharacter in Java Regex
+ public static void main(String[] args)
+    {
+        /*
+         * Meta characters affect the way a pattern is matched, in a
+         * way adding logic to the search pattern. The Java API
+         * supports several metacharacters, the most straightforward
+         * being the dot “." which matches any character:
+         */
+        calculateMatches(".", "foofoo");
+        /*
+         * Notice the dot after the foo in the regex. The matcher
+         * matches every text that is preceded by foo since the last
+         * dot part means any character after. So after finding the
+         * first foo, the rest is seen as any character. That is why
+         * there is only a single match.
+         */
+        calculateMatches("foo.", "foofoo");
+    }
+
+    private static void calculateMatches(String regex, String inputText)
+    {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(inputText);
+        int matches = 0;
+
+        /*
+         * The find method keeps advancing through the input text and
+         * returns true for every match, so we can use it to find the
+         * match count as well:
+         */
+        while (matcher.find())
+        {
+            ++matches;
+        }
+        System.out.println("Number of Matches = " + matches);
+    }
+	
+//60.Use the OR Class Metacharacter in Java Regex 
+
+ public static void main(String[] args)
+{
+	/*
+	 * [abc] - Any of the elements in the set is matched
+	 */
+	calculateMatches("[abc]", "b");
+	calculateMatches("[abc]", "cab");
+	calculateMatches("[abc]", "caABZ9");
+
+	/*
+	 * They can also be alternated as part of a String. In the
+	 * following example, when we create different words by
+	 * alternating the first letter with each element of the set,
+	 * they are all matched:
+	 */
+	calculateMatches("[bcr]at", "bat cat rat zat");
+
+}
+
+private static void calculateMatches(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}	
+
+//61.Use the NOR Class Metacharacter in Java Regex
+public static void main(String[] args)
+{
+	calculateMatches("[^abc]", "z");
+	calculateMatches("[^bcr]at", "sat mat");
+	calculateMatches("[^bcr]at", "sat mat eat bat cat");
+}
+
+private static void calculateMatches(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+
+//62.Use the Range Metacharacter Class in Java Regex
+public static void main(String[] args)
+{
+	/*
+	 * Matching uppercase letters:
+	 */
+	calculateMatches( "[A-Z]", "Welcome To India");
+	/*
+	 * Matching lowercase letters:
+	 */
+	calculateMatches( "[a-z]", "Two");
+	/*
+	 * Matching both upper case and lower case letters:
+	 */
+	calculateMatches("[a-zA-Z]", "Two");
+	/*
+	 * Matching a given range of numbers:
+	 */
+	calculateMatches( "[1-5]", "hi 65");
+   
+}
+
+private static void calculateMatches(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+//63.Use the Union Metacharacter Class in Java Regex
+public static void main(String[] args)
+{
+	/*
+	 * This will only match 6 out of the 9 integers because the
+	 * union set skips  4,5 and 6.
+	 */
+	calculateMatches("[1-3[7-9]]", "123456789");
+}
+
+private static void calculateMatches(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+//64.Use the Intersection Metacharacter Class in Java Regex
+public static void main(String[] args)
+{
+	/*
+	 * We will get 4 matches because the intersection of the two
+	 * sets has only 4 elements[3456].
+	 */
+	calculateMatches("[1-6&&[3-9]]", "3456");
+	calculateMatches("[1-6&&[3-9]]", "123456789");
+}
+
+private static void calculateMatches(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+//65.Use the Subtraction Metacharacter Class in Java Regex
+public static void main(String[] args)
+{
+	/*
+	 * We will get 8 matches because the Subtraction of the two
+	 * sets has only 8 elements.
+	 */
+	calculateMatches("[0-9&&[^12]]", "0123456789");
+	calculateMatches("[0-9&&[^12]]", "123");
+}
+
+private static void calculateMatches(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+//66.use predefined character class digit and non-digit?
+//from here use calculateMatches from above same method
+ public static void main(String[] args)
+{
+	/*
+	 * Matching digits, equivalent to [0-9]:
+	 */
+	calculateMatches("\\d", "12abcd");
+	/*
+	 * Matching non-digits, equivalent to [^0-9]:
+	 */
+	calculateMatches("\\D", "12abcd");
+}
+//67.use predefined character class whitespace and non-whitespace?
+public static void main(String[] args)
+{
+	/*
+	 * Matching white space:
+	 */
+	calculateMatches("\\s", "a    c");
+	/*
+	 * Matching non-white space:
+	 */
+	calculateMatches("\\S", "a    c");
+}
+//68.use predefined character class word character and non-word character?
+public static void main(String[] args)
+{
+	/*
+	 * Matching a word character, equivalent to [a-zA-Z_0-9]:
+	 */
+	calculateMatches("\\w", "Hi9!#");
+	/*
+	 * Matching a non-word character:
+	 */
+	calculateMatches("\\W", "Hi9!#");
+}
+
+//69.use predefined character class word character and non-word character?
+public static void main(String[] args)
+{
+	/*
+	 * Matching a word character, equivalent to [a-zA-Z_0-9]:
+	 */
+	calculateMatches("\\w", "Hi9!#");
+	/*
+	 * Matching a non-word character:
+	 */
+	calculateMatches("\\W", "Hi9!#");
+}
+//69.Using Quantifier {3} for Exact Repetition
+ public static void main(String[] args)
+{
+	isMatch("a{3}", "aaa");
+	isMatch("a{3}", "aa");
+	isMatch("a{3}", "aaaaaa");
+}
+
+private static void isMatch(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+
+	System.out.println("Regex = " + regex + " , " + "InputText = "
+			+ inputText + " is matching? = " + matcher.matches());
+}
+
+//70.Use Quantifier {2,3} for Range of Repetition in Java Regex
+public static void main(String[] args)
+{
+
+	/*
+	 * We’ve specified at least two occurrences but not exceeding
+	 * three.
+	 */
+	isMatch("a{2,3}", "aa");
+	isMatch("a{2,3}", "aaa");
+	isMatch("a{2,3}", "a");
+	isMatch("a{2,3}", "aaaaaa");
+
+}
+
+private static void isMatch(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+
+	System.out.println("Regex = " + regex + " , " + "InputText = "
+			+ inputText + " is matching? = " + matcher.matches());
+}
+//71.Use Capturing Groups in Java Regex
+public static void main(String[] args)
+{
+
+	/*
+	 * The API also allows us to treat multiple digits as a
+	 * single unit through capturing groups.
+	 */
+	isMatch("(\\d\\d)", "12");
+	isMatch("(\\d\\d)", "123");
+	isMatch("(\\d\\d)", "a2");
+
+}
+
+private static void isMatch(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+
+	System.out.println("Regex = " + regex + " , " + "InputText = "
+			+ inputText + " is matching? = " + matcher.matches());
+}
+//72.Use Capturing Groups and Back References in Java Regex
+
+public static void main(String[] args)
+{
+
+	/*
+	 * Where there are two separate matches for the input, we can
+	 * have one match but propagating the same regex match to span
+	 * the entire length of the input using back referencing:
+	 */
+	isMatch("(\\d\\d)\\1", "3434"); //34 repeating 1 time
+	isMatch("(\\d\\d)\\1", "3499");
+
+	isMatch("(\\d\\d)\\1\\1", "343434");//34 is repeating 2 times
+	isMatch("(\\d\\d)\\1\\1", "343439");
+
+}
+
+private static void isMa tch(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+
+	System.out.println("Regex = " + regex + " , " + "InputText = "
+			+ inputText + " is matching? = " + matcher.matches());
+}
+
+//73.Use Boundary Matchers in Java Regex?
+public static void main(String[] args)
+{
+
+	/*
+	 * To match only when the required regex is true at the
+	 * beginning of the text, we use the caret ^.
+	 */
+	calculateMatches("^dog", "dogs are friendly");
+	calculateMatches("^dog", "are dogs are friendly?");
+}
+
+private static void calculateMatches(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+//74.Use End Boundary Matchers in Java Regex?
+public static void main(String[] args)
+{
+
+	/*
+	 * To match only when the required regex is true at the end of
+	 * the text, we use the dollar character $.
+	 */
+	calculateMatches("dog$", "Man's best friend is a dog");
+	calculateMatches("dog$", "is a dog man's best friend?");
+}
+
+private static void calculateMatches(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+//75.Use Anywhere Boundary Matchers in Java Regex?
+
+public static void main(String[] args)
+{
+
+	/*
+	 * If we want a match only when the required text is found at
+	 * a word boundary, we use \\b regex at the beginning and end
+	 * of the regex:
+	 */
+	calculateMatches("\\bdog\\b", "a dog is friendly");
+	calculateMatches("\\bdog\\b", "dog is man's best friend,dog is good");
+	calculateMatches("\\bdog\\b", "snoop dogg is a rapper");
+
+	/*
+	 * Two-word characters appearing in a row does not mark a word
+	 * boundary, but we can make it pass by changing the end of
+	 * the regex to look for a non-word boundary:
+	 */
+	calculateMatches("\\bdog\\B", "snoop dogg is a rapper");
+}
+
+private static void calculateMatches(String regex, String inputText)
+{
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+//76.Use Case-Insensitive Flag in Java Regex?
+ public static void main(String[] args)
+{
+	/*
+	 * Pattern.CASE_INSENSITIVE
+	 *
+	 * This flag enables matching regardless of case. By default
+	 * matching takes case into account
+	 *
+	 * So using this flag, we can change the default behavior:
+	 */
+	calculateMatches("dog", "This is a DOG", Pattern.CASE_INSENSITIVE);
+}
+
+private static void calculateMatches(String regex, String inputText,
+		int flag)
+{
+	Pattern pattern = Pattern.compile(regex, flag);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+//77.Use Comments Flag in Java Regex?
+public static void main(String[] args)
+{
+	/*
+	 * Pattern.COMMENTS
+	 *
+	 * when we use the flag, it will ignore the extra spaces and
+	 * the every text starting with # will be seen as a comment to
+	 * be ignored for each line:
+	 */
+	calculateMatches("dog$  #check end of text", "This is a dog",
+			Pattern.COMMENTS);
+}
+
+private static void calculateMatches(String regex, String inputText,
+		int flag)
+{
+	Pattern pattern = Pattern.compile(regex, flag);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+//78.Use Multiline Flag in Java Regex?
+
+ public static void main(String[] args)
+{
+
+	String inputText = "This is a dog"
+			+ System.getProperty("line.separator") + "this is a fox";
+
+	System.out.println(inputText);
+
+	/*
+	 * Pattern.MULTILINE
+	 *
+	 * With out Pattern.MULTILINE flag The match fails because the
+	 * matcher searches for dog at the end of the entire String
+	 * but the dog is present at the end of the first line of the
+	 * string.
+	 *
+	 * However, with the Pattern.MULTILINE flag, the same test
+	 * will pass since the matcher now takes into account line
+	 * terminators. So the String dog is found just before the
+	 * line terminates, hence success:
+	 */
+	calculateMatches("dog$", inputText, Pattern.MULTILINE);
+}
+
+private static void calculateMatches(String regex, String inputText,
+		int flag)
+{
+	Pattern pattern = Pattern.compile(regex, flag);
+	Matcher matcher = pattern.matcher(inputText);
+	int matches = 0;
+
+	/*
+	 * The find method keeps advancing through the input text and
+	 * returns true for every match, so we can use it to find the
+	 * match count as well:
+	 */
+	while (matcher.find())
+	{
+		++matches;
+	}
+	System.out.println("Number of Matches = " + matches);
+}
+
+//79.Index Methods of Matcher Class in Java Regex
+ public static void main(String[] args)
+{
+	Pattern pattern = Pattern.compile("dog");
+	Matcher matcher = pattern.matcher("This dog is mine");
+
+	while (matcher.find())
+	{
+
+		/*
+		 * Index methods provide useful index values that show
+		 * precisely where the match was found in the input String
+		 * . In the following test, we will confirm the start and
+		 * end indices of the match for dog in the input String.
+		 */
+		System.out.println("Starting position = " + matcher.start());
+		System.out.println("Ending position = " + matcher.end());
+	}
+}
+//80.Use Study Methods of Matcher Class in Java Regex
+public static void main(String[] args)
+{
+	Pattern pattern = Pattern.compile("dog");
+	Matcher matcher = pattern.matcher("dog is friendly");
+
+	/*
+	 * Study methods go through the input String and return a
+	 * boolean indicating whether or not the pattern is found.
+	 * Commonly used are matches and lookingAt methods.
+	 *
+	 * The matches and lookingAt methods both attempt to match an
+	 * input sequence against a pattern. The difference, is that
+	 * matches requires the entire input sequence to be matched,
+	 * while lookingAt does not.
+	 */
+	System.out.println(matcher.lookingAt());
+	System.out.println(matcher.matches());
+}
+//81.Use Replacement Methods of Matcher Class in Java Regex
+ public static void main(String[] args)
+{
+	Pattern pattern = Pattern.compile("dog");
+	Matcher matcher = pattern
+			.matcher("dogs are domestic animals, dogs are friendly");
+
+	/*
+	 * Replacement methods are useful to replace text in an input
+	 * string. The common ones are replaceFirst and replaceAll.
+	 *
+	 * The replaceFirst and replaceAll methods replace the text
+	 * that matches a given regular expression. As their names
+	 * indicate, replaceFirst replaces the first occurrence, and
+	 * replaceAll replaces all occurrences.
+	 */
+	String newStr = matcher.replaceFirst("cat");
+	System.out.println(newStr);
+	
+	
+}
+ public static void main(String[] args)
+    {
+        Pattern pattern = Pattern.compile("dog");
+        Matcher matcher = pattern
+                .matcher("dogs are domestic animals, dogs are friendly");
+
+        /*
+         * Replacement methods are useful to replace text in an input
+         * string. The common ones are replaceFirst and replaceAll.
+         *
+         * The replaceFirst and replaceAll methods replace the text
+         * that matches a given regular expression. As their names
+         * indicate, replaceFirst replaces the first occurrence, and
+         * replaceAll replaces all occurrences.
+         */
+        String newStr = matcher.replaceAll("cat");
+        System.out.println(newStr);
+    }
+	
+//82.Use Logical Operators in Java Regex
+ public static void main(String[] args)
+{
+	/*
+	 * The Logical Operator XY matches the X followed by Y.
+	 */
+	Pattern pattern = Pattern.compile("to");
+	Matcher matcher = pattern.matcher("Welcome to India");
+
+	while (matcher.find())
+	{
+		System.out.println(matcher.group() + ", Match String start(): "
+				+ matcher.start());
+	}
+}
+public static void main(String[] args)
+{
+	/*
+	 * The Logical Operator X|Y matches the X or Y.
+	 */
+	Pattern pattern = Pattern.compile("t|o");
+	Matcher matcher = pattern.matcher("Welcome to India");
+
+	while (matcher.find())
+	{
+		System.out.println(matcher.group() + ", Match String start(): "
+				+ matcher.start());
+	}
+}
