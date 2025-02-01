@@ -1,0 +1,16 @@
+services:
+  accounts:
+    image: "javatrainer/accounts:v4"
+    container_name: accounts_ms
+    ports:
+      - 8080:8080
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - tech2java
+
+networks:
+  tech2java:
+    driver: "bridge"
