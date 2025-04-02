@@ -156,6 +156,7 @@ public static void main(String[] args) {
 	System.out.println(list.stream().mapToInt(String::length).max());
 	System.out.println(list.stream().max((s1,s2)->s1.length()-s2.length()).get());
 	System.out.println(list.stream().max(Comparator.comparingInt(String::length)).get());
+	System.out.println(List.of("java","genai","agenticAI").stream().collect(Collectors.groupingBy(x->x.length())));
 }
 
 //Question 13: Write a Java 8 program to convert all strings to uppercase in a list ?
